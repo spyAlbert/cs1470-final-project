@@ -1,9 +1,4 @@
 #!/usr/bin/env python3
-# coding: utf-8
-"""
-Rewrite of the original CLIP-feature extraction script.
-Same functionality & I/O, different implementation details.
-"""
 
 import os
 import json
