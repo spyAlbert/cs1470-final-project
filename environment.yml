@@ -1,0 +1,17 @@
+name: clip_caption
+channels:
+  - defaults # Conda default channel
+dependencies:
+  # ── core ────────────────────────────────
+  - python>=3.8 # minimum Python version
+  - pip>=21 # ensure recent pip
+  - pytorch>=2.2
+  - scikit-image=0.18.1
+
+  # ── PyPI extras installed via pip ───────
+  - pip:
+      - tqdm
+      - regex
+      - ftfy
+      - transformers==4.10.2
+      - git+https://github.com/openai/CLIP.git
