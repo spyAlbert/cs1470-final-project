@@ -71,11 +71,11 @@ class TransformerNetwork(nn.Module):
     def forward(self, x, y=None, mask=None):
         for i, block in enumerate(self.blocks):
             if self.is_encoder_decoder and i % 2 == 0:
-                x = block(x, y)
+                x, _ = block(x, y)
             elif self.is_encoder_decoder:
-                x = block(x, x, mask)
+                x, _ = block(x, x, mask)
             else:
-                x = block(x, y, mask)
+                x, _ = block(x, y, mask)
         return x
 
     def __init__(self, input_dim: int, num_heads: int, num_layers: int, ref_dim: Optional[int] = None,
