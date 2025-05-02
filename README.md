@@ -1,49 +1,41 @@
-# cs1430-final-project
+# Image Captioning via CLIP Prefix Tuning
 
-56674 captions
-33,841 for train
-12,505 for val
+## Overview
 
-mlp:
+This project explores how powerful pre-trained vision and language models, such as CLIP and GPT-2, can be leveraged for image captioning without fine-tuning the large models themselves. Our approach reimplements the "ClipCap: CLIP Prefix for Image Captioning" model, proposed by Ron et al. We aim to bridge the vision and language domains by using a lightweight Transformer (or MLP) to map visual features from CLIP into GPT-2's language embedding space.
 
-> > > Training epoch 0
-> > > coco_prefix: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1416/1416 [1:11:32<00:00, 3.03s/it, loss=3.54]
-> > > Training epoch 1
-> > > coco_prefix: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1416/1416 [1:11:32<00:00, 3.03s/it, loss=2.98]
-> > > Training epoch 2
-> > > coco_prefix: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1416/1416 [1:11:32<00:00, 3.03s/it, loss=2.52]
-> > > Training epoch 3
-> > > coco_prefix: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1416/1416 [1:11:32<00:00, 3.03s/it, loss=2.19]
-> > > Training epoch 4
-> > > coco_prefix: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████| 1416/1416 [1:00:16<00:00, 2.55s/it, loss=2.34]
-> > > Training epoch 5
-> > > coco_prefix: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████| 1416/1416 [1:02:43<00:00, 2.66s/it, loss=2.21]
-> > > Training epoch 6
-> > > coco_prefix: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████| 1416/1416 [1:10:13<00:00, 2.98s/it, loss=2.12]
-> > > Training epoch 7
-> > > coco_prefix: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████| 1416/1416 [1:01:11<00:00, 2.59s/it, loss=1.98]
-> > > Training epoch 8
-> > > coco_prefix: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████| 1416/1416 [59:50<00:00, 2.54s/it, loss=1.89]
-> > > Training epoch 9
-> > > coco_prefix: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████| 1416/1416 [59:31<00:00, 2.52s/it, loss=2.06]
+## Introduction
 
-transformer:
+Our project focuses on efficiently using CLIP and GPT-2 for image captioning tasks, by training a small mappting network (mlp/transformer) that generates prefix tokens for GPT-2 based on CLIP’s visual embeddings. The aim is to generate grammatically coherent and semantically relevant captions without requiring fine-tuning of large models like CLIP and GPT-2.
 
-> > > Training epoch 0
-> > > coco_prefix: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████| 1416/1416 [1:55:32<00:00, 4.90s/it, loss=2.92]
-> > > Training epoch 1
-> > > coco_prefix: 100%|████████████████████████████████████████████████████████████████████████████████████| 1416/1416 [1:43:02<00:00, 4.37s/it, loss=2.98]
-> > > Training epoch 2
-> > > coco_prefix: 100%|████████████████████████████████████████████████████████████████████████████████████| 1416/1416 [1:39:08<00:00, 4.20s/it, loss=2.47]
-> > > Training epoch 3
-> > > coco_prefix: 100%|████████████████████████████████████████████████████████████████████████████████████| 1416/1416 [2:04:43<00:00, 5.28s/it, loss=2.64]
-> > > Training epoch 4
-> > > coco_prefix: 100%|████████████████████████████████████████████████████████████████████████████████████| 1416/1416 [2:00:02<00:00, 5.09s/it, loss=2.44]
-> > > Training epoch 5
-> > > coco_prefix: 100%|████████████████████████████████████████████████████████████████████████████████████| 1416/1416 [2:41:53<00:00, 6.86s/it, loss=2.56]
-> > > Training epoch 6
-> > > coco_prefix: 100%|████████████████████████████████████████████████████████████████████████████████████| 1416/1416 [2:09:39<00:00, 5.49s/it, loss=2.42
-> > > Training epoch 7
-> > > coco_prefix: 100%|████████████████████████████████████████████████████████████████████████████████████| 1416/1416 [2:07:51<00:00, 5.42s/it, loss=2.54]
-> > > Training epoch 9
-> > > coco_prefix: 100%|████████████████████████████████████████████████████████████████████████████████████| 1416/1416 [2:06:49<00:00, 5.37s/it, loss=2.22]
+## Related Work
+
+- **ClipCap:CLIP Prefix for Image Captioning** by Ron et al.
+
+## Data
+
+We use a subset of the **COCO Captions Dataset**, which contains 56,674 captions in total: 33,841 images for training and 12,505 images for validation. The dataset is preprocessed by resizing and normalizing images for CLIP, and captions are tokenized using GPT-2's tokenizer. You can download the dataset [here](https://drive.google.com/file/d/1sAsUIo_W36DFZ6fXBRRkWGGHTIqA-LRx/view).
+
+## Methodology
+
+Our pipeline consists of:
+
+1. **CLIP** for extracting image embeddings.
+2. **A Transformer (or MLP)** that maps CLIP embeddings to prefix tokens for GPT-2.
+3. **GPT-2** which generates captions conditioned on the prefix tokens.
+
+### Train
+
+1. Run `python clip_preprocess.py` to create CLIP embeddings.
+2. Run `python train.py` to train the MLP mapper + fine-tune GPT-2.
+3. Run `python train.py --only_prefix --mapping_type transformer --prefix_length 40 --prefix_length_clip 40` to train the Transformer mapper with a frozen GPT-2.
+
+### Predict
+
+Run `python predict.py --mapping_type mlp/transformer --image image_path --model model_weight_path` to predict caption.
+
+## Metrics
+
+We evaluate the model using the following image captioning metrics:
+
+- **BLEU-4**: Measures n-gram overlap with ground truth captions.

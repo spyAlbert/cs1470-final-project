@@ -13,6 +13,7 @@ dependencies:
       - tqdm
       - regex
       - ftfy
+      - nltk
       - tensorflow
       - transformers
       - tf-keras

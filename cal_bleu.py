@@ -76,7 +76,7 @@ def extract_captions(mlp_map, transformer_map, image_ids):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--path_caption', default="./data/coco/annotations/real_caption.json")
+    parser.add_argument('--path_caption', default="./data/coco/annotations/train_caption.json")
     parser.add_argument('--path_images', default="./data/coco/bleu")
     args = parser.parse_args()
     image_ids = set() 
