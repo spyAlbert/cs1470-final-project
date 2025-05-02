@@ -26,7 +26,7 @@ Our pipeline consists of:
 
 ### Train
 
-1. Run `python clip_preprocess.py` to create CLIP embeddings.
+1. Run `python clip_preprocess.py` to create CLIP embeddings, or download [here](https://drive.google.com/file/d/13qzq6dw6aYx79sy1SrJ2whvPG2YP9v1a/view?usp=sharing).
 2. Run `python train.py` to train the MLP mapper + fine-tune GPT-2.
 3. Run `python train.py --only_prefix --mapping_type transformer --prefix_length 40 --prefix_length_clip 40` to train the Transformer mapper with a frozen GPT-2.
 
