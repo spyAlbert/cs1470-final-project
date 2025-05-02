@@ -39,3 +39,5 @@ Run `python predict.py --mapping_type mlp/transformer --image image_path --model
 We evaluate the model using the following image captioning metrics:
 
 - **BLEU-4**: Measures n-gram overlap with ground truth captions.
+
+Run `python cal_bleu.py --path_caption path_to_image_captions --path_images path_to_images_folder` to calculate the average BLEU-4 score for both MLP and Transformer mapping networks. Image names should match the format `COCO_val2014_XXX`, where `XXX` is the image ID.
